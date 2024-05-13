@@ -1,0 +1,27 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main  # Adjust this branch name as needed
+  pull_request:
+    branches:
+      - main  # Adjust this branch name as needed
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+
+    env:
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress tests
+        run: |
+          npx cypress run --record --key ${CYPRESS_RECORD_KEY}
